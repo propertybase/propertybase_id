@@ -10,5 +10,5 @@ require "propertybase_id"
 # require "pry"
 # Pry.start
 
-require "irb"
-IRB.start
+require "pry"
+Pry.start
