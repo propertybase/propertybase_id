@@ -1,8 +1,6 @@
 # PropertybaseId
 
-Welcome to your new gem! In this directory, you"ll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/propertybase_id`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem can be utilized to create globally uniqu Propertybase IDs.
 
 ## Installation
 
@@ -22,7 +20,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Create
+
+    id = PropertybaseId.create(objectt: "team", server: 1)
+    => #<PropertybaseId:0x007fe855071a58 @_object_id=2, @local_random=738414242805187245, @object="team", @server=1>
+
+For string representation do:
+
+    id.to_s
+    => "02015lyq044bfuel"
+
+### Parsing
+
+To get a PropertybaseId object from a string representation do:
+
+    PropertybaseId.parse("02015lyq044bfuel")
+    => #<PropertybaseId:0x007f9943cb48a8 @_object_id=2, @local_random=738414242805187245, @object="team", @server=1>
 
 ## Development
 
