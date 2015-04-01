@@ -55,8 +55,7 @@ class PropertybaseId
   end
 
   def self.generate(object:)
-    @@_generator ||= PropertybaseId::Generator.new
-    @@_generator.generate(object: object)
+    @@generator.generate(object: object)
   end
 
   def self.parse(input_id)
@@ -86,4 +85,6 @@ class PropertybaseId
     raise ArgumentError, "No object to id #{input_id.to_s(36)}" if obj.nil?
     obj
   end
+
+  @@generator = PropertybaseId::Generator.new
 end
