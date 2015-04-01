@@ -1,4 +1,5 @@
 require "digest/sha1"
+require "socket"
 
 class PropertybaseId
   class Generator
