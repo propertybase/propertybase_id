@@ -28,13 +28,13 @@ Or install it yourself as:
 For string representation do:
 
     id.to_s
-    => "002xfnm458e72001"
+    => "002xfnm458e7200001"
 
 ### Parsing
 
 To get a PropertybaseId object from a string representation do:
 
-    PropertybaseId.parse("002xfnm458e72001")
+    PropertybaseId.parse("002xfnm458e7200001")
     => #<PropertybaseId:0x007f90e3d57f48 @counter=1, @host_id=1203, @object_id=2, @process_id=254, @time=1427867006>
 
 ## Development
