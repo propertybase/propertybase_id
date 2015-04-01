@@ -1,120 +1,125 @@
 require "spec_helper"
 
 describe PropertybaseId do
-  subject { described_class }
+  subject do
+    described_class.new(
+      object: object,
+      host_id: host_id,
+      process_id: process_id,
+      counter: counter,
+      time: time,
+    )
+  end
 
-  describe ".create" do
-    let(:object) { "user" }
-    let(:server) { 1 }
+  describe "#==" do
+    let(:object) { "team" }
+    let(:host_id) { "be" }
+    let(:process_id) { "cl" }
+    let(:counter) { "own" }
+    let(:time) { 1427829234 }
 
-    let(:opts) { { object: object, server: server } }
+    context "for equal ids" do
+      let(:compare_to) do
+        described_class.new(
+          object: object,
+          host_id: host_id,
+          process_id: process_id,
+          counter: counter,
+          time: time,
+        )
+      end
 
-    it "returns a PropertybaseId object" do
-      expect(subject.create(opts)).to be_a(PropertybaseId)
-    end
-
-    it "sets object" do
-      expect(subject.create(opts).object).to eq(object)
-    end
-
-    it "sets server" do
-      expect(subject.create(opts).server).to eq(server)
-    end
-
-    it "sets local random" do
-      expect(subject.create(opts).local_random).not_to be_nil
+      it "returns true" do
+        expect(subject).to eq(compare_to)
+      end
     end
   end
 
-  describe ".new" do
-    subject{ described_class.new(object, server, local_random) }
-
-    context "valid" do
-      let(:object) { "user" }
-      let(:server) { 1 }
-      let(:local_random) { 164314242792474636 }
-
-      it "does not raise error" do
-        expect{ subject }.not_to raise_error
+  describe ".generate" do
+    context "wrong object" do
+      it "raises exception for unknown object" do
+        expect do
+          described_class.generate(object: "streusselkuchen")
+        end.to raise_error(ArgumentError)
       end
     end
 
-    context "non existing object" do
-      let(:object) { "something_that_does_not_exist" }
-      let(:server) { 1 }
-      let(:local_random) { 241714242792682775 }
+    context "uniqueness" do
+      context "single thread" do
+        it "creates 2 different IDs" do
+          expect(described_class.generate(object: "team")).not_to eq(described_class.generate(object: "team"))
+        end
+      end
 
-      it "raises an argument error" do
-        expect{ subject }.to raise_error(ArgumentError)
+      context "multi thread" do
+        it "returns different ID" do
+          id1 = nil
+          id2 = nil
+
+          t1 = Thread.new { id1 = described_class.generate(object: "user") }
+          t2 = Thread.new { id2 = described_class.generate(object: "user") }
+
+          t1.join
+          t2.join
+
+          expect(id1).not_to eq(id2)
+        end
       end
     end
   end
 
   describe ".parse" do
-    subject { described_class }
+    let(:input_id) { "#{object_id_36}#{host_id_36}#{time_36}#{process_id_36}#{counter_36}" }
 
-    context "valid" do
-      context "user id" do
-        let(:input_id) { "01012vd3f2emuc5e" }
+    context "invalid ID" do
+      context "too short" do
+        let(:input_id) { "123" }
 
-        it "sets object to user" do
-          expect(subject.parse(input_id).object).to eq("user")
-        end
-
-        it "sets server id" do
-          expect(subject.parse(input_id).server).to eq(1)
-        end
-
-        it "sets local random" do
-          expect(subject.parse(input_id).local_random).to eq(377914242793817858)
-        end
-
-        it "converts correctly to input" do
-          expect(subject.parse(input_id).to_s).to eq(input_id)
+        it "raises argument error" do
+          expect do
+            described_class.parse(input_id)
+          end.to raise_error(ArgumentError, /invalid length/)
         end
       end
 
-      context "team id" do
-        let(:input_id) { "020145yx6dq9zfo4" }
+      context "too long" do
+        let(:input_id) { "00145678901234567" }
 
-        it "sets object to user" do
-          expect(subject.parse(input_id).object).to eq("team")
-        end
-
-        it "sets server id" do
-          expect(subject.parse(input_id).server).to eq(1)
-        end
-
-        it "sets local random" do
-          expect(subject.parse(input_id).local_random).to eq(548314242795100948)
-        end
-
-        it "converts correctly to input" do
-          expect(subject.parse(input_id).to_s).to eq(input_id)
+        it "raises argument error" do
+          expect do
+            described_class.parse(input_id)
+          end.to raise_error(ArgumentError, /invalid length/)
         end
       end
 
-      context "valid" do
-        context "unknown object" do
-          let(:input_id) { "zz0145yx6dq9zfo4" }
+      context "non existing object" do
+        let(:input_id) { "zzz4567890123456" }
 
-          it "raises error" do
-            expect { subject.parse(input_id) }.to raise_error(ArgumentError)
-          end
+        it "raises argumen error" do
+          expect do
+            described_class.parse(input_id)
+          end.to raise_error(ArgumentError, /No object to id zzz/)
         end
       end
     end
-  end
 
-  describe "#to_s" do
-    subject { described_class.new("user", 1, 501714242792241327) }
+    context "valid ID" do
+      let(:object) { "user" }
+      let(:object_id) { 1 }
+      let(:host_id) { 926 }
+      let(:time) { 1427848726 }
+      let(:process_id) { 892 }
+      let(:counter) { 11 }
 
-    it "returns a string" do
-      expect(subject.to_s).to be_a(String)
-    end
+      let(:object_id_36) { "001" }
+      let(:host_id_36) { "pq" }
+      let(:time_36) { "nm3r4m" }
+      let(:process_id_36) { "os" }
+      let(:counter_36) { "00b" }
 
-    it "returns expected string" do
-      expect(subject.to_s).to eq("01013t82ut9kmkdr")
+      it "returns correct ID" do
+        expect(described_class.parse(input_id)).to eq(subject)
+      end
     end
   end
 end
