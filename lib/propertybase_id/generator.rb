@@ -41,7 +41,7 @@ class PropertybaseId
     end
 
     def next_counter
-      @counter = (@counter + 1) % max_value(3)
+      @counter = (@counter + 1) % max_value(5)
     end
 
     def process_id

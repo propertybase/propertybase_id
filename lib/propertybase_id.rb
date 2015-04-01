@@ -28,7 +28,7 @@ class PropertybaseId
       host_str = format_number(@host_id, 2)
       time_str = format_number(@time, 6)
       process_str = format_number(@process_id, 2)
-      counter_str = format_number(@counter, 3)
+      counter_str = format_number(@counter, 5)
 
       "#{object_str}#{host_str}#{time_str}#{process_str}#{counter_str}"
     end
@@ -63,9 +63,9 @@ class PropertybaseId
   end
 
   def self.parse(input_id)
-    raise ArgumentError, "invalid length (#{input_id.size})" if input_id.size != 16
+    raise ArgumentError, "invalid length (#{input_id.size})" if input_id.size != 18
 
-    _, object_id, host_id, time, process_id, counter = input_id.match(/(\w{3})(\w{2})(\w{6})(\w{2})(\w{3})/).to_a
+    _, object_id, host_id, time, process_id, counter = input_id.match(/(\w{3})(\w{2})(\w{6})(\w{2})(\w{5})/).to_a
 
     team_from_object_id(object_id.to_i(36))
 

@@ -103,7 +103,7 @@ describe PropertybaseId do
       end
 
       context "too long" do
-        let(:input_id) { "00145678901234567" }
+        let(:input_id) { "0014567890123456789" }
 
         it "raises argument error" do
           expect do
@@ -113,7 +113,7 @@ describe PropertybaseId do
       end
 
       context "non existing object" do
-        let(:input_id) { "zzz4567890123456" }
+        let(:input_id) { "zzz456789012345678" }
 
         it "raises argumen error" do
           expect do
@@ -134,7 +134,7 @@ describe PropertybaseId do
       let(:host_id_36) { "pq" }
       let(:time_36) { "nm3r4m" }
       let(:process_id_36) { "os" }
-      let(:counter_36) { "00b" }
+      let(:counter_36) { "0000b" }
 
       it "returns correct ID" do
         expect(described_class.parse(input_id)).to eq(subject)
