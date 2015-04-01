@@ -32,7 +32,7 @@ module Conflicts
       puts "No conflicts"
     else
       puts "Created conflicting elements:"
-      puts "Conflicts: #{(arrays - arrays_unique).inspect}"
+      puts "Conflicts: #{(arrays.find_all{ |e| arrays.count(e) > 1 }).inspect}"
     end
 
   end
