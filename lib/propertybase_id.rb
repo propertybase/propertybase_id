@@ -1,5 +1,4 @@
 require "propertybase_id/version"
-require "propertybase_id/local_random"
 require "propertybase_id/generator"
 require "propertybase_id/mappings"
 
