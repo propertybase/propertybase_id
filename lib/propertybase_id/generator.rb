@@ -9,20 +9,15 @@ class PropertybaseId
     end
 
     def generate(object: )
-      @mutex.lock
-      begin
-        count = next_counter
-      ensure
-        @mutex.unlock rescue nil
+      @mutex.synchronize do
+        PropertybaseId.new(
+          object_id: pb_object_id(object),
+          host_id: host_id,
+          time: ::Time.now.to_i,
+          process_id: process_id,
+          counter: next_counter
+        )
       end
-
-      PropertybaseId.new(
-        object_id: pb_object_id(object),
-        host_id: host_id,
-        time: time,
-        process_id: process_id,
-        counter: count
-      )
     end
 
     private
@@ -31,10 +26,6 @@ class PropertybaseId
       PropertybaseId::Mappings.objects.fetch(object) do
         raise ArgumentError, "Object #{object.inspect} not found"
       end
-    end
-
-    def time
-      @_time ||= ::Time.now.to_i
     end
 
     def host_id

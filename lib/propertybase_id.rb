@@ -55,10 +55,8 @@ class PropertybaseId
   end
 
   def self.generate(object:)
-    @_generator ||= begin
-      PropertybaseId::Generator.new
-    end
-    @_generator.generate(object: object)
+    @@_generator ||= PropertybaseId::Generator.new
+    @@_generator.generate(object: object)
   end
 
   def self.parse(input_id)
