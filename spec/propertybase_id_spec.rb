@@ -35,6 +35,26 @@ describe PropertybaseId do
     end
   end
 
+  describe "#object" do
+    subject { described_class.generate(object: object) }
+
+    context "user" do
+      let(:object) { "user" }
+
+      it "returns user" do
+        expect(subject.object).to eq(object)
+      end
+    end
+
+    context "team" do
+      let(:object) { "team" }
+
+      it "returns team" do
+        expect(subject.object).to eq(object)
+      end
+    end
+  end
+
   describe ".generate" do
     context "wrong object" do
       it "raises exception for unknown object" do

@@ -23,7 +23,7 @@ Or install it yourself as:
 ### Generate
 
     id = PropertybaseId.generate(object: "team")
-    =>  #<PropertybaseId:0x007f90e3dcf048 @counter=1, @host_id=1203, @object="team", @object_id=2, @process_id=254, @time=1427867006>
+    =>  #<PropertybaseId:0x007f90e3dcf048 @counter=1, @host_id=1203, @object_id=2, @process_id=254, @time=1427867006>
 
 For string representation do:
 
@@ -35,7 +35,7 @@ For string representation do:
 To get a PropertybaseId object from a string representation do:
 
     PropertybaseId.parse("002xfnm458e72001")
-    => #<PropertybaseId:0x007f90e3d57f48 @counter=1, @host_id=1203, @object="team", @object_id=2, @process_id=254, @time=1427867006>
+    => #<PropertybaseId:0x007f90e3d57f48 @counter=1, @host_id=1203, @object_id=2, @process_id=254, @time=1427867006>
 
 ## Development
 

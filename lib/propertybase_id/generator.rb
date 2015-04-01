@@ -27,7 +27,7 @@ class PropertybaseId
     private
 
     def pb_object_id(object)
-      @_object_id ||= PropertybaseId::Mappings.objects.fetch(object) do
+      PropertybaseId::Mappings.objects.fetch(object) do
         raise ArgumentError, "Object #{object.inspect} not found"
       end
     end

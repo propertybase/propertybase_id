@@ -19,6 +19,10 @@ class PropertybaseId
     validate!
   end
 
+  def object
+    @_object ||= self.class.team_from_object_id(@object_id || "")
+  end
+
   def to_s
     @_string ||= begin
       object_str = format_number(@object_id, 3)
@@ -64,9 +68,7 @@ class PropertybaseId
 
     _, object_id, host_id, time, process_id, counter = input_id.match(/(\w{3})(\w{2})(\w{6})(\w{2})(\w{3})/).to_a
 
-    object, _ = PropertybaseId::Mappings.objects.select{|_, v| v == object_id.to_i(36) }.first
-
-    raise ArgumentError, "No object to id #{object_id}" if object.nil?
+    team_from_object_id(object_id.to_i(36))
 
     new(
       object_id: object_id.to_i(36),
@@ -87,5 +89,11 @@ class PropertybaseId
 
   def format_number(integer, length)
     integer.to_s(36).rjust(length, "0")
+  end
+
+  def self.team_from_object_id(input_id)
+    obj, _ = PropertybaseId::Mappings.objects.select{|_, v| v == input_id }.first
+    raise ArgumentError, "No object to id #{input_id.to_s(36)}" if obj.nil?
+    obj
   end
 end
