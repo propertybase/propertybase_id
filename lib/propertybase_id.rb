@@ -44,11 +44,11 @@ class PropertybaseId
 
   def hash
     [
-      @object_id,
-      @host_id,
-      @time,
-      @process_id,
-      @counter,
+      object_id,
+      host_id,
+      time,
+      process_id,
+      counter,
     ].hash
   end
 
