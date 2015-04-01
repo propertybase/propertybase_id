@@ -20,22 +20,22 @@ Or install it yourself as:
 
 ## Usage
 
-### Create
+### Generate
 
-    id = PropertybaseId.create(objectt: "team", server: 1)
-    => #<PropertybaseId:0x007fe855071a58 @_object_id=2, @local_random=738414242805187245, @object="team", @server=1>
+    id = PropertybaseId.generate(object: "team")
+    =>  #<PropertybaseId:0x007f90e3dcf048 @counter=1, @host_id=1203, @object="team", @object_id=2, @process_id=254, @time=1427867006>
 
 For string representation do:
 
     id.to_s
-    => "02015lyq044bfuel"
+    => "002xfnm458e72001"
 
 ### Parsing
 
 To get a PropertybaseId object from a string representation do:
 
-    PropertybaseId.parse("02015lyq044bfuel")
-    => #<PropertybaseId:0x007f9943cb48a8 @_object_id=2, @local_random=738414242805187245, @object="team", @server=1>
+    PropertybaseId.parse("002xfnm458e72001")
+    => #<PropertybaseId:0x007f90e3d57f48 @counter=1, @host_id=1203, @object="team", @object_id=2, @process_id=254, @time=1427867006>
 
 ## Development
 
