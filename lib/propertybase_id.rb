@@ -15,7 +15,6 @@ class PropertybaseId
     @time = time
     @process_id = process_id
     @counter = counter
-    validate!
   end
 
   def object
@@ -79,12 +78,6 @@ class PropertybaseId
   end
 
   private
-
-  def validate!
-    @object_id ||= PropertybaseId::Mappings.objects.fetch(object) do
-      raise ArgumentError, "Object #{object.inspect} not found"
-    end
-  end
 
   def format_number(integer, length)
     integer.to_s(36).rjust(length, "0")
