@@ -30,10 +30,13 @@ module Conflicts
 
     if uniq == size
       puts "No conflicts"
+      puts "====="
+      0
     else
       puts "Created conflicting elements:"
       puts "Conflicts: #{(arrays.find_all{ |e| arrays.count(e) > 1 }).inspect}"
+      puts "====="
+      -1
     end
-
   end
 end
