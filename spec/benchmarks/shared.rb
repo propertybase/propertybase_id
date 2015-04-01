@@ -18,6 +18,11 @@ module Conflicts
     end
 
     thread_objects.each(&:join)
+
+    process_ids = arrays.map(&:first).map(&:process_id)
+
+    puts "Process IDs: #{process_ids.inspect} (unique: #{process_ids.uniq.size})"
+
     arrays.flatten!
 
     arrays_unique = arrays.uniq
