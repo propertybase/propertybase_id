@@ -9,10 +9,6 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Leif Gensert"]
   spec.email         = ["leif@propertybase.com"]
 
-  if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com' to prevent pushes to rubygems.org, or delete to allow pushes to any server."
-  end
-
   spec.summary       = %q{Gem for creating Propertybase compatible IDs}
   spec.description   = %q{This gem lets you create IDs in the Propertybase universe. Still under heavy development}
   spec.homepage      = "http://www.propertybase.com"
