@@ -3,7 +3,7 @@ require "spec_helper"
 describe PropertybaseId do
   subject do
     described_class.new(
-      object: object,
+      object_id: object_id,
       host_id: host_id,
       process_id: process_id,
       counter: counter,
@@ -12,7 +12,7 @@ describe PropertybaseId do
   end
 
   describe "#==" do
-    let(:object) { "team" }
+    let(:object_id) { 2 }
     let(:host_id) { "be" }
     let(:process_id) { "cl" }
     let(:counter) { "own" }
@@ -21,7 +21,7 @@ describe PropertybaseId do
     context "for equal ids" do
       let(:compare_to) do
         described_class.new(
-          object: object,
+          object_id: object_id,
           host_id: host_id,
           process_id: process_id,
           counter: counter,
@@ -104,7 +104,6 @@ describe PropertybaseId do
     end
 
     context "valid ID" do
-      let(:object) { "user" }
       let(:object_id) { 1 }
       let(:host_id) { 926 }
       let(:time) { 1427848726 }

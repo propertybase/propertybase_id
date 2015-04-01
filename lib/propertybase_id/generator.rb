@@ -16,7 +16,7 @@ class PropertybaseId
       end
 
       PropertybaseId.new(
-        object: object,
+        object_id: pb_object_id(object),
         host_id: host_id,
         time: time,
         process_id: process_id,
@@ -25,6 +25,12 @@ class PropertybaseId
     end
 
     private
+
+    def pb_object_id(object)
+      @_object_id ||= PropertybaseId::Mappings.objects.fetch(object) do
+        raise ArgumentError, "Object #{object.inspect} not found"
+      end
+    end
 
     def time
       @_time ||= ::Time.now.to_i

@@ -4,14 +4,14 @@ require "propertybase_id/generator"
 require "propertybase_id/mappings"
 
 class PropertybaseId
-  attr_reader :object
+  attr_reader :object_id
   attr_reader :host_id
   attr_reader :time
   attr_reader :process_id
   attr_reader :counter
 
-  def initialize(object:, host_id:, time:, process_id:, counter:)
-    @object = object && object.dup.freeze
+  def initialize(object_id:, host_id:, time:, process_id:, counter:)
+    @object_id = object_id
     @host_id = host_id
     @time = time
     @process_id = process_id
@@ -33,7 +33,7 @@ class PropertybaseId
 
   def ==(o)
     self.class == o.class &&
-    self.object == o.object &&
+    self.object_id == o.object_id &&
     self.host_id == o.host_id &&
     self.process_id == o.process_id &&
     self.time == o.time &&
@@ -69,7 +69,7 @@ class PropertybaseId
     raise ArgumentError, "No object to id #{object_id}" if object.nil?
 
     new(
-      object: object,
+      object_id: object_id.to_i(36),
       host_id: host_id.to_i(36),
       time: time.to_i(36),
       process_id: process_id.to_i(36),
