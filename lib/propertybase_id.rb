@@ -79,7 +79,7 @@ class PropertybaseId
   end
 
   def self.max_value(digits = max_length)
-    ("zz" * digits).to_i(36)
+    ("z" * digits).to_i(36)
   end
 
   private
