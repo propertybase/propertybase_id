@@ -29,19 +29,15 @@ class PropertybaseId
     end
 
     def host_id
-      @_host_id ||= Digest::SHA1.hexdigest(Socket.gethostname).to_i(16) % max_value(2)
+      @_host_id ||= Digest::SHA1.hexdigest(Socket.gethostname).to_i(16) % PropertybaseId.max_value(2)
     end
 
     def next_counter
-      @counter = (@counter + 1) % max_value(5)
+      @counter = (@counter + 1) % PropertybaseId.max_value(5)
     end
 
     def process_id
-      "#{Process.pid}#{Thread.current.object_id}".hash % max_value(2)
-    end
-
-    def max_value(digits)
-      ("z" * digits).to_i(36) + 1
+      "#{Process.pid}#{Thread.current.object_id}".hash % PropertybaseId.max_value(2)
     end
   end
 end

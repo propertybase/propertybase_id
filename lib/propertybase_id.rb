@@ -59,7 +59,7 @@ class PropertybaseId
   end
 
   def self.parse(input_id)
-    raise ArgumentError, "invalid length (#{input_id.size})" if input_id.size != 18
+    raise ArgumentError, "invalid length (#{input_id.size})" if input_id.size != max_length
 
     _, object_id, host_id, time, process_id, counter = input_id.match(/(\w{3})(\w{2})(\w{6})(\w{2})(\w{5})/).to_a
 
@@ -72,6 +72,14 @@ class PropertybaseId
       process_id: process_id.to_i(36),
       counter: counter.to_i(36),
     )
+  end
+
+  def self.max_length
+    18
+  end
+
+  def self.max_value(digits = max_length)
+    ("zz" * digits).to_i(36)
   end
 
   private
