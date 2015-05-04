@@ -1,4 +1,11 @@
 {
   "user": 1,
-  "team": 2
+  "team": 2,
+  "contact": 3,
+  "listing": 4,
+  "activity": 5,
+  "asset": 6,
+  "favorite": 7,
+  "task": 8,
+  "request": 9
 }

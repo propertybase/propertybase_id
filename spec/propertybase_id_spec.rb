@@ -38,19 +38,13 @@ describe PropertybaseId do
   describe "#object" do
     subject { described_class.generate(object: object) }
 
-    context "user" do
-      let(:object) { "user" }
+    PropertybaseId::Mappings.objects.keys.each do |kind|
+      context kind do
+        let(:object) { kind }
 
-      it "returns user" do
-        expect(subject.object).to eq(object)
-      end
-    end
-
-    context "team" do
-      let(:object) { "team" }
-
-      it "returns team" do
-        expect(subject.object).to eq(object)
+        it "returns #{kind}" do
+          expect(subject.object).to eq(object)
+        end
       end
     end
   end
