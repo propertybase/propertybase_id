@@ -7,5 +7,6 @@
   "asset": 6,
   "favorite": 7,
   "task": 8,
-  "request": 9
+  "request": 9,
+  "property": 10
 }
