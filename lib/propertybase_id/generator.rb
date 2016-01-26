@@ -1,23 +1,15 @@
 require "digest/sha1"
 require "socket"
+require "securerandom"
 
 class PropertybaseId
   class Generator
-    def initialize
-      @counter = 0
-      @mutex = Mutex.new
-    end
-
     def generate(object: )
-      @mutex.synchronize do
-        PropertybaseId.new(
-          object_id: pb_object_id(object),
-          host_id: host_id,
-          time: ::Time.now.to_i,
-          process_id: process_id,
-          counter: next_counter
-        )
-      end
+      PropertybaseId.new(
+        object_id: pb_object_id(object),
+        time: ::Time.now.to_i,
+        random_int: random_32
+      )
     end
 
     private
@@ -30,6 +22,10 @@ class PropertybaseId
 
     def host_id
       @_host_id ||= Digest::SHA1.hexdigest(Socket.gethostname).to_i(16) % PropertybaseId.max_value(2)
+    end
+
+    def random_32
+      SecureRandom::random_number("zzzzzz".to_i(36) + 1)
     end
 
     def next_counter

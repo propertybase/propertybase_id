@@ -4,27 +4,21 @@ describe PropertybaseId do
   subject do
     described_class.new(
       object_id: object_id,
-      host_id: host_id,
-      process_id: process_id,
-      counter: counter,
       time: time,
+      random_int: random_int
     )
   end
 
   describe "#==" do
     let(:object_id) { 2 }
-    let(:host_id) { "be" }
-    let(:process_id) { "cl" }
-    let(:counter) { "own" }
+    let(:random_int) { 581698 }
     let(:time) { 1427829234 }
 
     context "for equal ids" do
       let(:compare_to) do
         described_class.new(
           object_id: object_id,
-          host_id: host_id,
-          process_id: process_id,
-          counter: counter,
+          random_int: random_int,
           time: time,
         )
       end
@@ -83,7 +77,7 @@ describe PropertybaseId do
   end
 
   describe ".parse" do
-    let(:input_id) { "#{object_id_36}#{host_id_36}#{time_36}#{process_id_36}#{counter_36}" }
+    let(:input_id) { "#{object_id_36}#{time_36}#{random_str_36}" }
 
     context "invalid ID" do
       context "too short" do
@@ -107,28 +101,24 @@ describe PropertybaseId do
       end
 
       context "non existing object" do
-        let(:input_id) { "zzz456789012345678" }
+        let(:input_id) { "zz4567891234567" }
 
         it "raises argumen error" do
           expect do
             described_class.parse(input_id)
-          end.to raise_error(ArgumentError, /No object to id zzz/)
+          end.to raise_error(ArgumentError, /No object to id zz/)
         end
       end
     end
 
     context "valid ID" do
       let(:object_id) { 1 }
-      let(:host_id) { 926 }
       let(:time) { 1427848726 }
-      let(:process_id) { 892 }
-      let(:counter) { 11 }
+      let(:random_int) { 11 }
 
-      let(:object_id_36) { "001" }
-      let(:host_id_36) { "pq" }
-      let(:time_36) { "nm3r4m" }
-      let(:process_id_36) { "os" }
-      let(:counter_36) { "0000b" }
+      let(:object_id_36) { "01" }
+      let(:time_36) { "0nm3r4m" }
+      let(:random_str_36) { "00000b" }
 
       it "returns correct ID" do
         expect(described_class.parse(input_id)).to eq(subject)
