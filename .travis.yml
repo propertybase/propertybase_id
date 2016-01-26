@@ -2,8 +2,9 @@ language: ruby
 cache: bundler
 bundler_args: --without documentation production
 rvm:
-  - 2.1.5
-  - 2.2.1
+  - 2.1.8
+  - 2.2.4
+  - 2.3.0
   - rbx
   - ruby-head
   - jruby-head
